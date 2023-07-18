@@ -1,0 +1,127 @@
+<h1 appHeadingFont>Crear Alumno</h1>
+<div matDialogContent>
+<form [formGroup]="userForm" class="grid">
+  <div class="col-6 field">
+    <div class="field">
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input [formControl]="nameControl" matInput type="text" name="name" />
+        <mat-error
+          *ngIf="nameControl.invalid && nameControl.hasError('required')"
+        >
+          Este campo es Requerido
+        </mat-error>
+
+        <mat-error
+          *ngIf="nameControl.invalid && nameControl.hasError('pattern')"
+        >
+          El Formato del nombre es invalido
+        </mat-error>
+        <mat-error *ngIf="nameControl.hasError('minLength')">
+          El Formato del nombre es Invalido
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="col-6 field">
+    <div class="field">
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Apellido</mat-label>
+        <input
+          [formControl]="surnameControl"
+          matInput
+          type="text"
+          name="surname"
+        />
+        <mat-error *ngIf="surnameControl.hasError('required')">
+          Este campo es Requerido
+        </mat-error>
+
+        <mat-error *ngIf="surnameControl.hasError('pattern')">
+          El Formato del Apellido es invalido
+        </mat-error>
+        <mat-error *ngIf="surnameControl.hasError('minLength')">
+          El Formato del Apellido es Invalido
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="col-6 field">
+    <div class="field">
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          [formControl]="emailControl"
+          matInput
+          type="email"
+          name="Email"
+        />
+        <mat-error
+          *ngIf="emailControl.invalid && emailControl.hasError('required')"
+        >
+          Este Campo es Requerido
+        </mat-error>
+        <mat-error *ngIf="emailControl.hasError('email')">
+          Debe ser un correo Valido
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="col-6 field">
+    <div class="field">
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input
+          [formControl]="passwordControl"
+          matInput
+          type="password"
+          name="password"
+        />
+        <mat-error
+          *ngIf="
+            passwordControl.invalid && passwordControl.hasError('required')
+          "
+        >
+          Este campo es Requerido
+        </mat-error>
+        <mat-error
+          *ngIf="passwordControl.invalid && passwordControl.hasError('length')"
+        >
+        La contraseña debe tener entre 6 y 8 caracteres.
+        </mat-error>
+        <mat-error
+          *ngIf="passwordControl.invalid && passwordControl.hasError('letters')"
+        >
+        La contraseña debe contener al menos 2 letras.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            passwordControl.invalid && passwordControl.hasError('uppercase')"
+        >
+        La contraseña debe contener al menos una letra mayúscula.
+        </mat-error>
+        <mat-error
+          *ngIf="passwordControl.invalid && passwordControl.hasError('number')"
+        >
+        La contraseña debe contener al menos un número.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            passwordControl.invalid && passwordControl.hasError('specialChar')"
+        >
+        La contraseña debe contener al menos un carácter especial.
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+</form>
+
+<pre>{{ userForm.value | json }}</pre>
+</div>
+
+<div class="flex Justify-content-end" mat-dialog-actions>
+  <button mat-button mat-dialog-close="">Cancelar Inscripcion</button>
+  <button (click)="onSubmit()" type="submit" mat-button>Gardar Alumno</button>
+</div>
