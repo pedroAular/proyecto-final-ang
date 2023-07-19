@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { users } from '../../models';
 
 
@@ -10,7 +10,12 @@ import { users } from '../../models';
   styleUrls: ['./users-table.component.scss']
 })
 export class UsersTableComponent {
-  displayedColumns: string[] = ['id', 'name', 'surname', 'email'];
+  displayedColumns: string[] = ['id', 'fullName', 'email', 'actions'];
   @Input()
   dataSource: users[] = [];
+
+  @Output()
+  delateusers= new EventEmitter<users>()
+  @Output()
+  editusers= new EventEmitter<users>()
 }

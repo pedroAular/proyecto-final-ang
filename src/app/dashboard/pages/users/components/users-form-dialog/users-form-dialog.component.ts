@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { minLengthValidator, passwordValidator } from 'src/app/shared/utils/form-validators';
+import { users } from '../../models';
 
 @Component({
   selector: 'app-users-form-dialog',
@@ -10,26 +11,26 @@ import { minLengthValidator, passwordValidator } from 'src/app/shared/utils/form
 })
 export class UsersFormDialogComponent {
 
-  nameControl = new FormControl(null, [
+  nameControl = new FormControl <string | null >(null, [
     Validators.required,
     Validators.minLength(3),
     Validators.pattern(/^[a-zA-Z ]+$/),
     minLengthValidator(3)
   ]);
 
-  surnameControl = new FormControl(null, [
+  surnameControl = new FormControl <string | null >(null, [
     Validators.required,
     Validators.minLength(3),
     Validators.pattern(/^[a-zA-Z ]+$/),
     minLengthValidator(3)
   ]);
 
-  emailControl = new FormControl(null, [
+  emailControl = new FormControl <string | null >(null, [
     Validators.required,
     Validators.email,
   ]);
 
-  passwordControl = new FormControl(null, [
+  passwordControl = new FormControl <string | null >(null, [
     Validators.required,
     passwordValidator
   ]);
@@ -41,7 +42,16 @@ export class UsersFormDialogComponent {
     password: this.passwordControl,
   });
   
-constructor(private dialogRef: MatDialogRef<UsersFormDialogComponent>){}
+constructor(private dialogRef: MatDialogRef<UsersFormDialogComponent>,
+  @Inject (MAT_DIALOG_DATA) private data?:users,
+  ){
+    if (this.data){
+      this.nameControl.setValue(this.data.name)
+      this.surnameControl.setValue(this.data.surname)
+      this.emailControl.setValue( this.data.email)
+      this.passwordControl.setValue(this.data.password)
+    }
+  }
 
   onSubmit():void {
     if(this.userForm.invalid){

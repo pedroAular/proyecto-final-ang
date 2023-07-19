@@ -8,16 +8,19 @@ import { MatTableModule } from '@angular/material/table';
 
 
 
+
 @NgModule({
   declarations: [
     UsersComponent,
     UsersFormDialogComponent,
-    UsersTableComponent
-  ],
+    UsersTableComponent,
+      ],
   imports: [
     CommonModule,
     SharedModule,
     MatTableModule,
+    
+
   ],
   exports:[
     UsersComponent,

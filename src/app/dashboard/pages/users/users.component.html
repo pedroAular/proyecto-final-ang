@@ -2,4 +2,8 @@
   <mat-icon>add</mat-icon>
   Crear Alumno
 </button>
-<app-users-table [dataSource]="users"></app-users-table>
+<app-users-table 
+  [dataSource]="users" 
+  (delateusers)="ondelateusers($event)"
+  (editusers)="onEditUsers($event)"
+></app-users-table>

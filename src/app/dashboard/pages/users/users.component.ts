@@ -21,7 +21,7 @@ let ELEMENT_DATA: users[] = [
 export class UsersComponent {
   public users: users[] = ELEMENT_DATA;
 
-  constructor(private matDialog: MatDialog) {}
+  constructor(private matDialog: MatDialog) { }
 
   onCreateUser(): void {
     let dialogRef = this.matDialog.open(UsersFormDialogComponent);
@@ -39,6 +39,37 @@ export class UsersComponent {
       } else {
         console.log('SE Cancela la inscripción');
       }
+    });
+  }
+
+  ondelateusers(usersToDelete: users): void {
+    console.log(usersToDelete);
+    if (confirm(`¿estas seguro de eliminar a ${usersToDelete.name}?`)) {
+      this.users = this.users.filter((u) => u.id !== usersToDelete.id)
+    }
+  }
+
+  onEditUsers(usersToEdit: users): void {
+    console.log(usersToEdit)
+    let dialogRef = this.matDialog.open(UsersFormDialogComponent, {
+      data: usersToEdit
+    });
+    dialogRef.afterClosed().subscribe((usersUpdated) => {
+      if (usersUpdated) {
+        this.users = this.users.map((user) => {
+          if (user.id === usersToEdit.id) {
+            return {
+              ...user,
+              name: usersUpdated.name,
+              surname: usersUpdated.surname,
+              email: usersUpdated.email,
+              password: usersUpdated.password,
+            };
+          }
+          return user;
+        });
+      }
+      console.log(usersUpdated)
     });
   }
 }

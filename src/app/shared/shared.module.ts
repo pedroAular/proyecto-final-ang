@@ -9,10 +9,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HeadingFontDirective } from 'src/app/heading-font.directive';
 import {MatTableModule} from '@angular/material/table';
+import { FullNamePipe } from './pipes/full-name.pipe';
 
 @NgModule({
   declarations: [
-    HeadingFontDirective
+    HeadingFontDirective,
+    FullNamePipe
   ],
   imports: [
     CommonModule,
@@ -34,6 +36,7 @@ import {MatTableModule} from '@angular/material/table';
     MatInputModule,
     MatFormFieldModule,
     HeadingFontDirective,
+    FullNamePipe
   ]
 })
 export class SharedModule { }
