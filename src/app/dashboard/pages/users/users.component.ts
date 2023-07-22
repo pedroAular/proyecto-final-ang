@@ -5,11 +5,11 @@ import { users } from './models';
 
 let ELEMENT_DATA: users[] = [
   {
-    id: 1,
-    name: 'Marcos',
-    surname: 'rodriguez',
-    email: 'p@default.com',
-    password: 'Pe22##',
+    id: 0,
+    name: '',
+    surname: '',
+    email: '',
+    password: '',
   },
 ];
 
