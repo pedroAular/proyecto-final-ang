@@ -1,17 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersFormDialogComponent } from './components/users-form-dialog/users-form-dialog.component';
 import { users } from './models';
+import { UsersService } from './users.service';
+import { NotifierService } from 'src/app/core/services/notifier.service';
+import { Observable, Subscription} from 'rxjs';
+import { map } from 'rxjs';
 
-let ELEMENT_DATA: users[] = [
-  {
-    id: 0,
-    name: '',
-    surname: '',
-    email: '',
-    password: '',
-  },
-];
+
 
 @Component({
   selector: 'app-users',
@@ -19,22 +15,33 @@ let ELEMENT_DATA: users[] = [
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent {
-  public users: users[] = ELEMENT_DATA;
+  public users: Observable<users[]>;
 
-  constructor(private matDialog: MatDialog) { }
+  constructor(
+    private matDialog: MatDialog, 
+    private usersService: UsersService,
+    private notifier: NotifierService,
+    ) {
+    this.usersService.loadUsers();
+    this.users= this.usersService.getUsers();
+    
+     }
 
   onCreateUser(): void {
     let dialogRef = this.matDialog.open(UsersFormDialogComponent);
     dialogRef.afterClosed().subscribe((v) => {
       if (v) {
-        const newUser: users = {
-          id: this.users.length + 1,
+      this.notifier.showSuccess ('se cargaron los usuarios')
+      this.usersService.createUser({
+       
+          id: new Date().getTime(),
           name: v.name,
           surname: v.surname,
           email: v.email,
-          password: v.password,
-        };
-        this.users = [...this.users, newUser];
+          password: v.password,})
+
+
+
         console.log('Recibimos el valor', v);
       } else {
         console.log('SE Cancela la inscripción');
@@ -45,8 +52,11 @@ export class UsersComponent {
   ondelateusers(usersToDelete: users): void {
     console.log(usersToDelete);
     if (confirm(`¿estas seguro de eliminar a ${usersToDelete.name}?`)) {
-      this.users = this.users.filter((u) => u.id !== usersToDelete.id)
+      this.users = this.users.pipe(
+        map(usersArray => usersArray.filter (u => u.id !== usersToDelete.id))
+      );
     }
+  
   }
 
   onEditUsers(usersToEdit: users): void {
@@ -56,7 +66,8 @@ export class UsersComponent {
     });
     dialogRef.afterClosed().subscribe((usersUpdated) => {
       if (usersUpdated) {
-        this.users = this.users.map((user) => {
+        this.users = this.users.pipe (
+           map(usersArray => usersArray.map (user => {
           if (user.id === usersToEdit.id) {
             return {
               ...user,
@@ -67,7 +78,8 @@ export class UsersComponent {
             };
           }
           return user;
-        });
+        }))
+        );
       }
       console.log(usersUpdated)
     });

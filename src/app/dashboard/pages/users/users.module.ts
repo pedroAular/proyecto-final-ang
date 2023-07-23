@@ -24,6 +24,7 @@ import { MatTableModule } from '@angular/material/table';
   ],
   exports:[
     UsersComponent,
-  ]
+  ],
+  providers:[]
 })
 export class UsersModule { }

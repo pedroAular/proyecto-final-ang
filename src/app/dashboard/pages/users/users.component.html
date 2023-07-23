@@ -3,7 +3,7 @@
   Crear Alumno
 </button>
 <app-users-table 
-  [dataSource]="users" 
+  [dataSource]="(users |async)|| []" 
   (delateusers)="ondelateusers($event)"
   (editusers)="onEditUsers($event)"
 ></app-users-table>
