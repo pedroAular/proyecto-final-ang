@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AuhtComponent } from './auht.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    AuhtComponent
+  ],
   imports: [
     CommonModule
   ]

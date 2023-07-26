@@ -7,6 +7,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import { HomeModule } from './pages/home/home.module';
 import { UsersModule } from './pages/users/users.module';
+import {MatListModule} from '@angular/material/list';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -18,9 +20,11 @@ import { UsersModule } from './pages/users/users.module';
     CommonModule,
     MatSidenavModule,
     MatButtonModule,
+    MatListModule,
     MatToolbarModule,
     MatIconModule,
     HomeModule,
+    RouterModule,
     UsersModule,
   ],
   exports:[

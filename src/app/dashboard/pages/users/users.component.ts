@@ -1,10 +1,10 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersFormDialogComponent } from './components/users-form-dialog/users-form-dialog.component';
 import { users } from './models';
 import { UsersService } from './users.service';
 import { NotifierService } from 'src/app/core/services/notifier.service';
-import { Observable, Subscription} from 'rxjs';
+import { Observable, tap,} from 'rxjs';
 import { map } from 'rxjs';
 
 
@@ -23,9 +23,17 @@ export class UsersComponent {
     private notifier: NotifierService,
     ) {
     this.usersService.loadUsers();
-    this.users= this.usersService.getUsers();
-    
-     }
+    this.users= this.usersService.getUsers().pipe(
+      tap((valor) =>console.log('VALOR', valor)),
+      map((valor)=> valor.map((usuario)=> ({...usuario, 
+        name:usuario.name.toUpperCase(),
+        surname: usuario.surname.toUpperCase(),
+      }))
+      ),
+      tap((valor) =>console.log('VALOR despues del map', valor)),
+    );
+
+    }
 
   onCreateUser(): void {
     let dialogRef = this.matDialog.open(UsersFormDialogComponent);
@@ -33,7 +41,7 @@ export class UsersComponent {
       if (v) {
       this.notifier.showSuccess ('se cargaron los usuarios')
       this.usersService.createUser({
-       
+
           id: new Date().getTime(),
           name: v.name,
           surname: v.surname,
@@ -67,7 +75,7 @@ export class UsersComponent {
     dialogRef.afterClosed().subscribe((usersUpdated) => {
       if (usersUpdated) {
         this.users = this.users.pipe (
-           map(usersArray => usersArray.map (user => {
+          map(usersArray => usersArray.map (user => {
           if (user.id === usersToEdit.id) {
             return {
               ...user,
