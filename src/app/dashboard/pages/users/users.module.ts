@@ -5,6 +5,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { UsersFormDialogComponent } from './components/users-form-dialog/users-form-dialog.component';
 import { UsersTableComponent } from './components/users-table/users-table.component';
 import { MatTableModule } from '@angular/material/table';
+import { UserDetailComponent } from './pages/user-detail/user-detail.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -14,11 +16,13 @@ import { MatTableModule } from '@angular/material/table';
     UsersComponent,
     UsersFormDialogComponent,
     UsersTableComponent,
+    UserDetailComponent,
       ],
   imports: [
     CommonModule,
     SharedModule,
     MatTableModule,
+    RouterModule,
     
 
   ],

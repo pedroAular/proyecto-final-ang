@@ -2,38 +2,39 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 
-
 interface MyCustomNotification {
   type: 'success' | 'error',
-  tittle:string,
+  title: string,
   message: string,
 }
-
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotifierService {
-private notifer$ = new Subject <MyCustomNotification>()
-
+  private notifier$ = new Subject<MyCustomNotification>();
 
   constructor() {
-    this.notifer$.subscribe({
-      next:(myNotification)=> {
-        Swal.fire(myNotification.tittle, myNotification.message, myNotification.type)
+    this.notifier$.subscribe({
+      next: (myNotification) => {
+        Swal.fire(myNotification.title, myNotification.message, myNotification.type);
       }
-    })
-   }
-showSuccess ( message: string, tittle = 'Realizazo',): void{
-  this.notifer$.next({
-    type: 'success',
-    tittle,
-    message,
-  })
+    });
+  }
+
+  showSuccess(message: string, title = 'Realizado'): void {
+    this.notifier$.next({
+      type: 'success',
+      title,
+      message,
+    });
+  }
+
+  showError(message: string, title = 'Error'): void {
+    this.notifier$.next({
+      type: 'error',
+      title,
+      message,
+    });
+  }
 }
-
-
-
-}
-

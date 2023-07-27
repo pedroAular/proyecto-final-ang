@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { AuhtModule } from './auht/auht.module';
 /* import { HeadingFontDirective } from './heading-font.directive'; */
 
 @NgModule({
@@ -16,6 +17,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     DashboardModule,
+    AuhtModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

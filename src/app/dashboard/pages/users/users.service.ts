@@ -6,6 +6,9 @@ import { BehaviorSubject, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class UsersService {
+  static getUsersById(arg0: string | null) {
+    throw new Error('Method not implemented.');
+  }
 private users: users[]=[
   
     {
