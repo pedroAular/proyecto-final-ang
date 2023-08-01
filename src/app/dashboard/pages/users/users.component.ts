@@ -42,17 +42,10 @@ export class UsersComponent {
       this.notifier.showSuccess ('se cargaron los usuarios')
       this.usersService.createUser({
 
-          id: new Date().getTime(),
           name: v.name,
           surname: v.surname,
           email: v.email,
           password: v.password,})
-
-
-
-        console.log('Recibimos el valor', v);
-      } else {
-        console.log('SE Cancela la inscripción');
       }
     });
   }
@@ -68,11 +61,12 @@ export class UsersComponent {
   }
 
   onEditUsers(usersToEdit: users): void {
-    console.log(usersToEdit)
     let dialogRef = this.matDialog.open(UsersFormDialogComponent, {
       data: usersToEdit
     });
-    dialogRef.afterClosed().subscribe((usersUpdated) => {
+    dialogRef
+    .afterClosed()
+    .subscribe((usersUpdated) => {
       if (usersUpdated) {
         this.users = this.users.pipe (
           map(usersArray => usersArray.map (user => {
@@ -89,7 +83,6 @@ export class UsersComponent {
         }))
         );
       }
-      console.log(usersUpdated)
     });
   }
 }

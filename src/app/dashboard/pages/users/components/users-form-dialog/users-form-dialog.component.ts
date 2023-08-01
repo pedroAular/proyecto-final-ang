@@ -10,7 +10,7 @@ import { users } from '../../models';
   styleUrls: ['./users-form-dialog.component.scss']
 })
 export class UsersFormDialogComponent {
-
+editinUsers?: users;
   nameControl = new FormControl <string | null >(null, [
     Validators.required,
     Validators.minLength(3),
@@ -46,6 +46,7 @@ constructor(private dialogRef: MatDialogRef<UsersFormDialogComponent>,
   @Inject (MAT_DIALOG_DATA) private data?:users,
   ){
     if (this.data){
+      this.editinUsers = this.data
       this.nameControl.setValue(this.data.name)
       this.surnameControl.setValue(this.data.surname)
       this.emailControl.setValue( this.data.email)

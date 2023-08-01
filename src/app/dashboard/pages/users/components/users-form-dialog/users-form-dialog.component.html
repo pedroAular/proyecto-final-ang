@@ -1,4 +1,7 @@
-<h1 appHeadingFont>Crear Alumno</h1>
+<h1 appHeadingFont>{{
+  editinUsers ?"EDITANDO A " + editinUsers.name + ""+ editinUsers.surname: "Crear Alumno"
+  }}
+</h1>
 <div matDialogContent>
 <form [formGroup]="userForm" class="grid">
   <div class="col-6 field">

@@ -5,6 +5,8 @@ import { AuhtComponent } from './auht/auht.component';
 import { HomeComponent } from './dashboard/pages/home/home.component';
 import { UsersComponent } from './dashboard/pages/users/users.component';
 import { UserDetailComponent } from './dashboard/pages/users/pages/user-detail/user-detail.component';
+import { LoginComponent } from './auht/pages/login/login.component';
+import { RegisterComponent } from './auht/pages/register/register.component';
 
 const routes: Routes = [
 {
@@ -44,11 +46,24 @@ component : UserDetailComponent,
 },
 {
   path: 'auth',
-  component:AuhtComponent
+  component:AuhtComponent,
+  children:[{
+    path:'login',
+    component:LoginComponent
+  },
+  {
+    path:'registrer',
+    component:RegisterComponent
+  },
+  {
+    path:'**',
+    redirectTo: 'login'
+  },
+  ]
 },
 {
   path: '**',
-  redirectTo: '/auth'
+  redirectTo: '/auth/login'
 },
 
 
