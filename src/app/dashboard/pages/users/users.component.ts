@@ -51,7 +51,6 @@ export class UsersComponent {
   }
 
   ondelateusers(usersToDelete: users): void {
-    console.log(usersToDelete);
     if (confirm(`¿estas seguro de eliminar a ${usersToDelete.name}?`)) {
       this.users = this.users.pipe(
         map(usersArray => usersArray.filter (u => u.id !== usersToDelete.id))

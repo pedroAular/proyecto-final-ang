@@ -9,6 +9,7 @@ import { HomeModule } from './pages/home/home.module';
 import { UsersModule } from './pages/users/users.module';
 import {MatListModule} from '@angular/material/list';
 import { RouterModule } from '@angular/router';
+import { dashboardRoutingModule } from './dashboard-routing-module';
 
 
 
@@ -17,6 +18,7 @@ import { RouterModule } from '@angular/router';
     DashboardComponent
   ],
   imports: [
+    dashboardRoutingModule,
     CommonModule,
     MatSidenavModule,
     MatButtonModule,
@@ -25,11 +27,10 @@ import { RouterModule } from '@angular/router';
     MatIconModule,
     HomeModule,
     RouterModule,
-    UsersModule,
+    UsersModule, 
+    
   ],
-  exports:[
-    DashboardComponent
-  ],
+  exports:[DashboardComponent],
 })
 
 export class DashboardModule { }

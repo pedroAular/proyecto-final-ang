@@ -1,85 +1,66 @@
 import { Injectable } from '@angular/core';
 import { createUserData, users } from './models';
-import { BehaviorSubject, Observable, Subject, delay, of, take } from 'rxjs';
-
-const USERS_DB: Observable<users[]> = of ([
-  
-  {
-    id: 1,
-    name: 'pedro',
-    surname: 'aular',
-    email: 'pedro@jmail.com',
-    password: 'Qq12!!',
-  },
-  {
-    id: 2,
-    name: 'Diego',
-    surname:'Cordoba',
-    email: 'Dieg@jmail.com',
-    password: 'Dieg12=?',
-  },
-  {
-    id: 3,
-    name: 'Susana',
-    surname: 'Medina',
-    email: 'Susi@jmail.com',
-    password: 'Susi12!"',
-  },
-  {
-    id: 4,
-    name: 'Juan ',
-    surname: 'Capote',
-    email: 'Juan@jmail.com',
-    password: 'Juan34#$',
-  },
-]).pipe(delay(1000))
-
+import { BehaviorSubject, Observable, defaultIfEmpty, map,mergeMap, take,} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsersService {
-  private users$ = new BehaviorSubject<users[]>([]);
+  private _users$ = new BehaviorSubject<users[]>([]);
+  private users$ = this._users$.asObservable();
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
     this.loadUsers();
   }
 
   loadUsers(): void {
-    USERS_DB.subscribe({
-      next: (usuariosDesdeDb) => this.users$.next(usuariosDesdeDb)
+    this.httpClient.get<users[]>('http://localhost:3000/users').subscribe({
+      next: (response) => {
+        console.log('RESPONSE:', response);
+        this._users$.next(response);
+      },
     });
   }
 
   getUsers(): Observable<users[]> {
-    return this.users$.asObservable();
+    return this._users$.asObservable();
   }
 
-  createUser(usuario: createUserData): void {
-
-
-
-    this.users$.pipe(take(1)).subscribe({
-
-
-      next: (arregloActual) =>
-      this.users$.next([
-        ...arregloActual,
-
-
-      {...usuario, id:arregloActual.length + 1 },
-    ]),
-      })
+  createUser(Payload: createUserData): void {
+    this.httpClient
+      .post<users>('http://localhost:3000/users', Payload)
+      .pipe(
+        mergeMap((userCreate) =>
+          this.users$.pipe(
+            take(1),
+            map((arrayActual) => [...arrayActual, userCreate])
+          )
+        )
+      )
+      .subscribe({
+        next: (arrayActualizado) => {
+          this._users$.next(arrayActualizado);
+        },
+      });
+    
   }
 
   updateUsersById(id: number, data: Partial<users>): void {
-    this.users$.pipe(take(1)).subscribe({
+    this._users$.pipe(take(1)).subscribe({
       next: (arregloActual) => {
         const usuariosActualizados = arregloActual.map((u) =>
           u.id === id ? { ...u, ...data } : u
         );
-        this.users$.next(usuariosActualizados);
-      }
-    });
+        this._users$.next(usuariosActualizados);
+      },
+    }); 
+  }
+
+  usersToDelete(id:number):void{
+    this.httpClient.delete('http://localhost:3000/users/'+ id).subscribe({
+      next:(userDelete) => console.log(userDelete),
+    })
+
   }
 }

@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "pesao",
+      "surname": "rosch",
+      "email": "mock@email.com",
+      "password": "123456"
+    },
+    {
+      "name": "juan",
+      "surname": "capote",
+      "email": "capo@gd.com",
+      "password": "Ca12!\"",
+      "id": 2
+    }
+  ]
+}
