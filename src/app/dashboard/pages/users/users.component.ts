@@ -14,14 +14,16 @@ import { map } from 'rxjs';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent {
+  export class UsersComponent {
   public users: Observable<users[]>;
-
+  public isLoading$: Observable<boolean>
   constructor(
     private matDialog: MatDialog, 
     private usersService: UsersService,
     private notifier: NotifierService,
+
     ) {
+    this.isLoading$=this.usersService.isLoading$
     this.usersService.loadUsers();
     this.users= this.usersService.getUsers().pipe(
       tap((valor) =>console.log('VALOR', valor)),
@@ -51,13 +53,11 @@ export class UsersComponent {
   }
 
   ondelateusers(usersToDelete: users): void {
-    if (confirm(`¿estas seguro de eliminar a ${usersToDelete.name}?`)) {
-      this.users = this.users.pipe(
-        map(usersArray => usersArray.filter (u => u.id !== usersToDelete.id))
-      );
+    if (confirm(`¿Estás seguro de eliminar a ${usersToDelete.name}?`)) {
+      this.usersService.usersToDelete(usersToDelete.id); // Elimina el usuario en el servicio
     }
-  
   }
+  
 
   onEditUsers(usersToEdit: users): void {
     let dialogRef = this.matDialog.open(UsersFormDialogComponent, {

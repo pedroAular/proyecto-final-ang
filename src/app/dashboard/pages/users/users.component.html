@@ -2,11 +2,14 @@
   <mat-icon>add</mat-icon>
   Crear Alumno
 </button>
+
+<div *ngIf="isLoading$ | async; else notloading ">Esta Cargando</div>
+<ng-template #notloading>
 <app-users-table 
   [dataSource]="(users |async)|| []" 
   (delateusers)="ondelateusers($event)"
   (editusers)="onEditUsers($event)"
 ></app-users-table>
-
+</ng-template>
 
 

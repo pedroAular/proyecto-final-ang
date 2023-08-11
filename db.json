@@ -1,17 +1,10 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "pesao",
-      "surname": "rosch",
-      "email": "mock@email.com",
-      "password": "123456"
-    },
-    {
-      "name": "juan",
-      "surname": "capote",
-      "email": "capo@gd.com",
-      "password": "Ca12!\"",
+      "name": "percy",
+      "surname": "lemon",
+      "email": "lemon@gato.com",
+      "password": "!qQ123",
       "id": 2
     }
   ]
