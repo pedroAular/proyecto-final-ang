@@ -1,10 +1,19 @@
 {
   "users": [
     {
-      "name": "percy",
-      "surname": "lemon",
-      "email": "lemon@gato.com",
-      "password": "!qQ123",
+      "name": "jose",
+      "surname": "aular",
+      "email": "jose@g.com",
+      "password": "1!qQwe32",
+      "token": "5yeOVCVNCVB7ESdT6lXa",
+      "id": 1
+    },
+    {
+      "name": "Pedro",
+      "surname": "aular",
+      "email": "ped@d.com",
+      "password": "12qwQW!",
+      "token": "SVguoFnC1dYJGH7NCpzn",
       "id": 2
     }
   ]

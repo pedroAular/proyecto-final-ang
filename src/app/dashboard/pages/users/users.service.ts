@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { createUserData, users } from './models';
 import { BehaviorSubject, Observable, defaultIfEmpty, map,mergeMap, take,} from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NotifierService } from 'src/app/core/services/notifier.service';
+import { generateRandomString } from 'src/app/shared/utils/helpers';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +20,11 @@ export class UsersService {
 
   loadUsers(): void {
     this._isLoading$.next(true);
-    this.httpClient.get<users[]>('http://localhost:3000/users').subscribe({
+    this.httpClient.get<users[]>(environment.baseApiUrl+'/users', {
+    headers: new HttpHeaders({
+      'token':'1234567'
+    })
+    }).subscribe({
       next: (response) => {
         console.log('RESPONSE:', response);
         this._users$.next(response);
@@ -37,8 +43,9 @@ export class UsersService {
   }
 
   createUser(Payload: createUserData): void {
+    const token= generateRandomString(20)
     this.httpClient
-      .post<users>('http://localhost:3000/users', Payload)
+      .post<users>(environment.baseApiUrl+'/users', {...Payload, token})
       .pipe(
         mergeMap((userCreate) =>
           this.users$.pipe(
@@ -56,25 +63,13 @@ export class UsersService {
   }
 
   updateUsersById(id: number, data: Partial<users>): void {
-    this.httpClient.put('http://localhost:3000/users/' + id, data).subscribe({
+    this.httpClient.put(environment.baseApiUrl+'/users/' + id, data).subscribe({
       next:()=> this.loadUsers(),
-    })
-
-
-
-
-   /*  this._users$.pipe(take(1)).subscribe({
-      next: (arregloActual) => {
-        const usuariosActualizados = arregloActual.map((u) =>
-          u.id === id ? { ...u, ...data } : u
-        );
-        this._users$.next(usuariosActualizados);
-      },
-    }); */ 
+    }) 
   }
 
   usersToDelete(id: number): void {
-    this.httpClient.delete('http://localhost:3000/users/' + id).subscribe({
+    this.httpClient.delete(environment.baseApiUrl+'/users/' + id).subscribe({
       next: (userDelete) => {
         console.log(userDelete);
 
