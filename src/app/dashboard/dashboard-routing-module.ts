@@ -16,12 +16,13 @@ import { UsersComponent } from './pages/users/users.component';
         path: 'users',
         loadChildren: () => import ('./pages/users/users.module').then((m) => m.UsersModule)
       },
+      
       {
         path: '**',
         redirectTo: 'home'
       }
     ])
   ],
-  exports: [RouterModule] // Exporta el módulo RouterModule para que pueda ser utilizado en otros módulos.
+  exports: [RouterModule] 
 })
 export class dashboardRoutingModule {}

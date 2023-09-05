@@ -1,21 +1,11 @@
 <mat-drawer-container class="example-container" autosize>
     <mat-drawer #drawer class="example-sidenav" mode="side">
       <p>ACCIONES</p>
-      <mat-nav-list>
-        <a routerLink="home" mat-list-item>Inicio</a>
-        <a routerLink="users" mat-list-item>Estudiantes</a>
-        <a routerLink="/auth" mat-list-item>Cerrar sesion</a>
-      </mat-nav-list>
+      <app-nav-menu></app-nav-menu>
     </mat-drawer>
   
     <div class="example-sidenav-content">
-            <mat-toolbar color="primary">
-              <button (click)="drawer.toggle()"mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-                <mat-icon>menu</mat-icon>
-              </button>
-              <span>BakeLab</span>
-              <span class="example-spacer"></span>
-            </mat-toolbar>
+    <app-toolbar [drawer]="drawer"></app-toolbar>
   <main class="p-5">
     <router-outlet></router-outlet>
   </main>

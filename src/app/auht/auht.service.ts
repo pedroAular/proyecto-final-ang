@@ -5,6 +5,9 @@ import { users } from "../dashboard/pages/users/models";
 import { NotifierService } from "../core/services/notifier.service";
 import { Router } from "@angular/router";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { Store } from "@ngrx/store";
+import { authReducer } from "../store/auht/auth.reducer";
+import { AuthActions } from "../store/auht/auth.actions";
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,6 +18,7 @@ export class AuthService {
     private notifier: NotifierService, 
     private router: Router,
     private httpClient: HttpClient,
+    private store:Store
     ) {}
 
 
@@ -28,13 +32,6 @@ export class AuthService {
       return !!usersResult.length
     })
    )
-   
-   
-   
-    /*  return this.authUsers$.pipe(
-      take(1),
-      map(user => !!user)
-    ); */
   }
 
   login(payload: loginPayload): void {
@@ -48,11 +45,13 @@ export class AuthService {
         if (response.length){
           const authUsers= response[0];
           this.authUsers$.next(authUsers);
+          this.store.dispatch(AuthActions.setAuthUsers({payLoad : authUsers}))
           this.router.navigate(['/dashboard']);
           localStorage.setItem('token', authUsers.token); 
         }else {
   this.notifier.showError('Email o contraseña inválido');
       this.authUsers$.next(null);
+      this.store.dispatch(AuthActions.setAuthUsers({payLoad : null}))
         }
       },
       error:(err) =>{
@@ -67,6 +66,11 @@ export class AuthService {
         }
       
       },
-    })
+    });
+    
+    }
+    public logout(): void {
+      this.store.dispatch(AuthActions.setAuthUsers({payLoad : null}))
   }
+  
 }

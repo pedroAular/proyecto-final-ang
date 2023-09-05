@@ -10,16 +10,23 @@ import { UsersModule } from './pages/users/users.module';
 import {MatListModule} from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { dashboardRoutingModule } from './dashboard-routing-module';
+import { NavMenuComponent } from './layout/nav-menu/nav-menu.component';
+import { ToolbarComponent } from './layout/toolbar/toolbar.component';
+
 
 
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    NavMenuComponent,
+    ToolbarComponent,
+    
   ],
   imports: [
     dashboardRoutingModule,
     CommonModule,
+    
     MatSidenavModule,
     MatButtonModule,
     MatListModule,

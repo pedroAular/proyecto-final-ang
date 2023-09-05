@@ -6,6 +6,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { auhtRoutingModule } from './auht-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -20,7 +21,8 @@ import { auhtRoutingModule } from './auht-routing.module';
     CommonModule,
     SharedModule,
     RouterModule,
-    auhtRoutingModule
+    auhtRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class AuhtModule { }

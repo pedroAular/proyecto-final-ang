@@ -10,7 +10,7 @@ import { UsersRoutingModule } from './users-routing.module';
 
 @NgModule({
   declarations: [
-    UsersComponent,
+    UsersComponent, 
     UsersFormDialogComponent,
     UsersTableComponent,
     UserDetailComponent,

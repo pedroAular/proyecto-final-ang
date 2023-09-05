@@ -54,7 +54,7 @@ import { map } from 'rxjs';
 
   ondelateusers(usersToDelete: users): void {
     if (confirm(`¿Estás seguro de eliminar a ${usersToDelete.name}?`)) {
-      this.usersService.usersToDelete(usersToDelete.id); // Elimina el usuario en el servicio
+      this.usersService.usersToDelete(usersToDelete.id); 
     }
   }
   

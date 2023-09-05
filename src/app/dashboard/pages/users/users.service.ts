@@ -22,7 +22,7 @@ export class UsersService {
     this._isLoading$.next(true);
     this.httpClient.get<users[]>(environment.baseApiUrl+'/users', {
     headers: new HttpHeaders({
-      'token':'1234567'
+    
     })
     }).subscribe({
       next: (response) => {
